@@ -1,1 +1,1 @@
-https://github.com/pushkiins/Git-Search.git
+https://pushkiins.github.io/Git-Search/
