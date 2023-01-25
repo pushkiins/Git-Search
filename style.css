@@ -3,32 +3,6 @@
 *::before {
   box-sizing: border-box;
 }
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-img {
-  height: auto;
-}
-
-ul {
-  padding: 0 0 0 0;
-  list-style: none;
-  margin: 0;
-}
-
-p {
-  padding: 0;
-  margin: 0;
-}
-
-h1,
-h2 {
-  padding: 0;
-  margin: 0;
-}
-
 html {
   scroll-behavior: smooth;
 }
@@ -61,7 +35,16 @@ body {
 .input-search__list {
   min-height: 125px;
   max-width: 200px;
+  padding: 0 0 0 0;
+  list-style: none;
+  margin: 0;
 }
+
+.marked__list {
+  padding: 0;
+  margin: 0;
+}
+
 .input-search__item {
   background-color: rgb(233, 232, 232);
 

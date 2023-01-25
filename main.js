@@ -1,5 +1,6 @@
 const searchInput = document.querySelector('.input-search');
 const repoContainer = document.querySelector('.container');
+const markedContainer = document.querySelector('.marked__list');
 const urlBase = 'https://api.github.com';
 const regular = /^[a-zA-Zа-яёА-ЯЁ0-9]+(?:[\s.-][a-zA-Zа-яёА-ЯЁ]+)*$/;
 
@@ -13,7 +14,7 @@ const getRepositories = async (urlAdres, text) => {
     arrRepo = repositories.items;
     autoComplete(arrRepo);
   } catch (err) {
-    console.log(err.name)
+    alert(err.name)
   }
 };
 
@@ -26,12 +27,12 @@ const debounce = (fn, ms) => {
     }, ms);
   };
 };
-const validCheck = (reg, text) => {
+const checkIsValid = (reg, text) => {
   return reg.test(text);
 };
 
-const onCange = (e) => {
-  const valid = validCheck(regular, searchInput.value);
+const onChange = (e) => {
+  const valid = checkIsValid(regular, searchInput.value);
 
   if (searchInput.value.length < 1) {
     autoComplete();
@@ -41,7 +42,7 @@ const onCange = (e) => {
   }
 };
 
-const cangeValue = debounce(onCange, 300);
+const nwValue = debounce(onChange, 300);
 
 const createElement = (tag, elementClass) => {
   const element = document.createElement(tag);
@@ -51,7 +52,7 @@ const createElement = (tag, elementClass) => {
   return element;
 };
 
-const getElOnId = (arr, id) => {
+const getElementById = (arr, id) => {
   return arr.filter((e) => e.id === +id);
 };
 
@@ -69,24 +70,23 @@ const autoComplete = (arrRepo = []) => {
 };
 const createCustomItem=(name,login,count)=>{
   const item = createElement('li', 'marked__item');
-  const divItem=createElement('div','marked__item-text')
-  const buttonItem=createElement('button','delette-btn')
-  divItem.textContent=`Name: ${name}\nOwner: ${login}\nStars: ${count}`
-  item.append(divItem,buttonItem)
-  return item
+  const divItem = createElement('div','marked__item-text');
+  const buttonItem = createElement('button','delette-btn');
+  divItem.textContent = `Name: ${name}\nOwner: ${login}\nStars: ${count}`
+  item.append(divItem,buttonItem);
+  return item;
   }
   
   const seveRepo = ({ name, owner, stargazers_count }) => {
-  const markedContainer = document.querySelector('.marked__list');
-  const item=createCustomItem(name,owner.login,stargazers_count)
-  markedContainer.appendChild(item)
+  const item=createCustomItem(name, owner.login, stargazers_count);
+  markedContainer.appendChild(item);
   };
 
-searchInput.addEventListener('keyup', cangeValue);
+searchInput.addEventListener('keyup', nwValue);
 
 repoContainer.addEventListener('click', (e) => {
   if (e.target.classList.value === 'input-search__item') {
-    const repo = getElOnId(arrRepo, e.target.getAttribute('data-id'));
+    const repo = getElementById(arrRepo, e.target.getAttribute('data-id'));
     seveRepo(...repo);
     searchInput.value = '';
     autoComplete();
